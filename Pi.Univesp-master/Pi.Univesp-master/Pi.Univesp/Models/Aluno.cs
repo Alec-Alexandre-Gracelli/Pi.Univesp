@@ -4,6 +4,7 @@ namespace Pi.Univesp.Models
 {
     public class Aluno
     {
+        
         //[Key]
         public int AlunoId { get; set; }
 
