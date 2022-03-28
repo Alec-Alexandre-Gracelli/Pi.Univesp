@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pi.Univesp.Data;
 using Pi.Univesp.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pi.Univesp.Controllers
 {
@@ -22,26 +19,17 @@ namespace Pi.Univesp.Controllers
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Alunos.ToListAsync());
         }
 
         // GET: Alunos/Details/5
+        //alunos/details?id=5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var aluno = await _context.Alunos
                 .FirstOrDefaultAsync(m => m.AlunoId == id);
-
-
-            
-            if (aluno == null)
-            {
-                return NotFound();
-            }
 
             return View(aluno);
         }
@@ -91,11 +79,11 @@ namespace Pi.Univesp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlunoId,Nome,RA")] Aluno aluno)
+        public async Task<IActionResult> Create(Aluno aluno)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(aluno);
+                _context.Alunos.Add(aluno);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
